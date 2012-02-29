@@ -2,6 +2,10 @@
 
 class mumble::server inherits mumble {
 
+  package { 'mumble-server':
+    ensure => installed,  # afaik, Ubuntu names pkg this
+  }
+
   file { $conf_file :
     ensure  => present,
     owner   => 'root',
@@ -9,6 +13,7 @@ class mumble::server inherits mumble {
     mode    => '0640',
     require => Package['mumble-server'],
     source  => 'puppet:///modules/monleezy-mumble/mumbler-server.ini',
+    notify  => Service['mumble-server'],
   }
 
   service { 'mumble-server':
@@ -16,8 +21,10 @@ class mumble::server inherits mumble {
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    subscribe  => File[$conf_file],
+    require    => Package['mumble-server'],
   }
+
+
 
 }
 

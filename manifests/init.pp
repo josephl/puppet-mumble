@@ -13,8 +13,6 @@
 # [Remember: No empty lines between comments and class definition]
 class mumble {
 
-  package { 'mumble-server':
-    ensure => present,
-  }
+  
 
 }
